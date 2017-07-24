@@ -21,6 +21,7 @@
 	</plugins>
   </build>
 
+  
   <dependencies>
   	<dependency>
   		<groupId>br.com.rjconsultores.tests.webmodules</groupId>
@@ -28,5 +29,4 @@
   		<version>0.0.1</version>
   	</dependency>
   </dependencies>
-  
 </project>
