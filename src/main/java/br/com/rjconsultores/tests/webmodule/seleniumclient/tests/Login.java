@@ -1,6 +1,5 @@
 package br.com.rjconsultores.tests.webmodule.seleniumclient.tests;
 
-import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.AttributeID;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.AttributeKey;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.IdentifyBy;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.WaitFor;
@@ -15,10 +14,11 @@ public class Login {
 	public static void main(String[] args) throws InterruptedException {
 		System system = new System();
 		processLogin(system.getLoginView());
+		system.getViews().add(getUserView());
 		
-		//system.getViews().add(getUserView());
-		/*system.getViews().add(getUserAdd());
-		system.getViews().add(validateTabsUserAdd());*/
+		system.getViews().add(getUserAdd());
+		
+		/*system.getViews().add(validateTabsUserAdd());*/
 		
 		system.validate();
 	}
@@ -28,8 +28,8 @@ public class Login {
 		View view = viewLogin;
 		
 		Component user = new Component();
-		user.getAttributes().put(AttributeKey.FIND_COMPONENT_BY, IdentifyBy.TAG_NAME.getDescription());
-		user.getAttributes().put(AttributeKey.VALUE_FIND_COMPONENT_BY, "input");
+		user.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.TAG_NAME.getDescription());
+		user.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "input");
 		user.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "name");
 		user.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "j_username");
 		user.getAttributes().put(AttributeKey.ATTRIBUTE_VALUE, "gleimar");
@@ -37,8 +37,8 @@ public class Login {
 		view.getComponents().add(user);
 
 		Component pass = new Component();
-		pass.getAttributes().put(AttributeKey.FIND_COMPONENT_BY, IdentifyBy.TAG_NAME.getDescription());
-		pass.getAttributes().put(AttributeKey.VALUE_FIND_COMPONENT_BY, "input");
+		pass.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.TAG_NAME.getDescription());
+		pass.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "input");
 		pass.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "name");
 		pass.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "j_password");
 		pass.getAttributes().put(AttributeKey.ATTRIBUTE_VALUE, "gleimar");
@@ -46,8 +46,8 @@ public class Login {
 		view.getComponents().add(pass);
 
 		Component btnLogin = new Component();
-		btnLogin.getAttributes().put(AttributeKey.FIND_COMPONENT_BY, IdentifyBy.TAG_NAME.getDescription());
-		btnLogin.getAttributes().put(AttributeKey.VALUE_FIND_COMPONENT_BY, "input");
+		btnLogin.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.TAG_NAME.getDescription());
+		btnLogin.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "input");
 		btnLogin.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "value");
 		btnLogin.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "Acesso");
 		btnLogin.getEvents().add(new MouseClickEvent());
@@ -56,27 +56,25 @@ public class Login {
 
 	private static View getUserView() {
 		View view = new View();
-		//view.getAttributes().put(AttributeKey.WAIT_FOR, WaitFor.COMPONENT.name());
-		//view.getAttributes().put(AttributeKey.COMPONENT_NAME, "z-menubar-hor");
 		
 		Component menuSeguranca = new Component();
 		menuSeguranca.getAttributes().put(AttributeKey.WAIT_FOR, WaitFor.COMPONENT.name());
 		menuSeguranca.getAttributes().put(AttributeKey.VALUE_WAIT_FOR, "z-menubar-hor");
-		menuSeguranca.getAttributes().put(AttributeKey.FIND_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
-		menuSeguranca.getAttributes().put(AttributeKey.VALUE_FIND_COMPONENT_BY, "z-menu-btn");
-		menuSeguranca.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "text");
-		menuSeguranca.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "Segurança");
+		menuSeguranca.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
+		menuSeguranca.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-menu-btn");
+		//menuSeguranca.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "innerHTML");
+		menuSeguranca.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "innerHTML");
+		menuSeguranca.getAttributes().put(AttributeKey.ATTRIBUTE_VALUE, "Segurança");
 		menuSeguranca.getEvents().add(new MouseClickEvent());
 		view.getComponents().add(menuSeguranca);
 		
-	/*	Component menuUsuario = new Component();
-		menuUsuario.getAttributes().put(AttributeKey.FIND_COMPONENT_BY, IdentifyBy.CLASS_NAME.name());
-		//Quando o tipo de componente for um class-name o component name deverá-ser o nome da class, nesse caso component_name deverá ser entendido como class_name
-		//menuUsuario.getAttributes().put(AttributeKey.COMPONENT_NAME, "z-menu-item-cnt");
-		menuUsuario.getAttributes().put(AttributeKey.ATTRIBUTE_ID, AttributeID.TEXT.name());
-		menuUsuario.getAttributes().put(AttributeKey.ATTRIBUTE_VALUE, "Usuário");
+		Component menuUsuario = new Component();
+		menuUsuario.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
+		menuUsuario.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-menu-item");
+		menuUsuario.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "innerHTML");
+		menuUsuario.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "Usuário");
 		menuUsuario.getEvents().add(new MouseClickEvent());
-		view.getComponents().add(menuUsuario);		*/
+		view.getComponents().add(menuUsuario);	
 		
 		return view;
 	}
@@ -84,16 +82,15 @@ public class Login {
 	private static View getUserAdd() {
 		View view = new View();
 		view.getAttributes().put(AttributeKey.WAIT_FOR, WaitFor.VIEW.name());
-		view.getAttributes().put(AttributeKey.VIEW_NAME, "Usuário");
-		view.getAttributes().put(AttributeKey.FIND_COMPONENT_BY, IdentifyBy.CLASS_NAME.name());
-		//view.getAttributes().put(AttributeKey.COMPONENT_NAME, "z-window-overlapped-header");
+		view.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY,IdentifyBy.CLASS_NAME.getDescription());
+		view.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-window-overlapped-header");
 		
 		
 		Component btnIncluirUsuario = new Component();
-		btnIncluirUsuario.getAttributes().put(AttributeKey.FIND_COMPONENT_BY, IdentifyBy.TAG_NAME.name());
-		//btnIncluirUsuario.getAttributes().put(AttributeKey.COMPONENT_NAME, Tag.BUTTON.name());
-		btnIncluirUsuario.getAttributes().put(AttributeKey.ATTRIBUTE_ID, AttributeID.TITLE.name());
-		btnIncluirUsuario.getAttributes().put(AttributeKey.ATTRIBUTE_VALUE, "Incluir");
+		btnIncluirUsuario.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
+		btnIncluirUsuario.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-button-os");
+		btnIncluirUsuario.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "title");
+		btnIncluirUsuario.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "Incluir");
 		btnIncluirUsuario.getEvents().add(new MouseClickEvent());
 		view.getComponents().add(btnIncluirUsuario);
 		
@@ -102,9 +99,9 @@ public class Login {
 
 	private static View validateTabsUserAdd() {
 		View view = new View();
-		view.getAttributes().put(AttributeKey.WAIT_FOR, WaitFor.COMPONENT.name());
+		view.getAttributes().put(AttributeKey.WAIT_FOR, WaitFor.VIEW.name());
 		//view.getAttributes().put(AttributeKey.COMPONENT_NAME, "Usuário");
-		view.getAttributes().put(AttributeKey.FIND_COMPONENT_BY, IdentifyBy.CLASS_NAME.name());
+		view.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.name());
 		//view.getAttributes().put(AttributeKey.COMPONENT_NAME, "z-tab-text");
 		
 		Component inputBoxLogin = new Component();
@@ -169,7 +166,7 @@ public class Login {
 		view.getComponents().add(btnSalvar);*/
 		
 		Component tabLocalizacao = new Component();
-		tabLocalizacao.getAttributes().put(AttributeKey.FIND_COMPONENT_BY, IdentifyBy.CLASS_NAME.name());
+		tabLocalizacao.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.name());
 		//tabLocalizacao.getAttributes().put(AttributeKey.COMPONENT_NAME, "z-tab-text");
 		tabLocalizacao.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "text");
 		tabLocalizacao.getAttributes().put(AttributeKey.ATTRIBUTE_VALUE, "Localização");
