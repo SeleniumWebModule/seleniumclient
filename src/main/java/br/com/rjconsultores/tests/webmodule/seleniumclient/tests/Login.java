@@ -2,9 +2,11 @@ package br.com.rjconsultores.tests.webmodule.seleniumclient.tests;
 
 import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.AttributeKey;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.IdentifyBy;
-import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.WaitFor;
+import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.WaitForTarget;
+import br.com.rjconsultores.tests.webmodule.seleniumcore.events.WaitEvent;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.events.implem.component.keyboard.KeyPressEvent;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.events.implem.component.mouse.MouseClickEvent;
+import br.com.rjconsultores.tests.webmodule.seleniumcore.system.Attribute;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.system.Component;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.system.System;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.system.View;
@@ -56,9 +58,12 @@ public class Login {
 
 	private static View getUserView() {
 		View view = new View();
+		WaitEvent waitView = new WaitEvent(10);
+		waitView.getAttributes().add(new Attribute("z-menubar-hor", null, IdentifyBy.CLASS_NAME)); 
+		view.doWait(waitView);
 		
 		Component menuSeguranca = new Component();
-		menuSeguranca.getAttributes().put(AttributeKey.WAIT_FOR, WaitFor.COMPONENT.name());
+		menuSeguranca.getAttributes().put(AttributeKey.WAIT_FOR, WaitForTarget.COMPONENT.name());
 		menuSeguranca.getAttributes().put(AttributeKey.VALUE_WAIT_FOR, "z-menubar-hor");
 		menuSeguranca.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
 		menuSeguranca.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-menu-btn");
@@ -81,7 +86,7 @@ public class Login {
 	
 	private static View getUserAdd() {
 		View view = new View();
-		view.getAttributes().put(AttributeKey.WAIT_FOR, WaitFor.VIEW.name());
+		view.getAttributes().put(AttributeKey.WAIT_FOR, WaitForTarget.VIEW.name());
 		view.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY,IdentifyBy.CLASS_NAME.getDescription());
 		view.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-window-overlapped-header");
 		
@@ -99,7 +104,7 @@ public class Login {
 
 	private static View validateTabsUserAdd() {
 		View view = new View();
-		view.getAttributes().put(AttributeKey.WAIT_FOR, WaitFor.VIEW.name());
+		view.getAttributes().put(AttributeKey.WAIT_FOR, WaitForTarget.VIEW.name());
 		//view.getAttributes().put(AttributeKey.COMPONENT_NAME, "Usuário");
 		view.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.name());
 		//view.getAttributes().put(AttributeKey.COMPONENT_NAME, "z-tab-text");
