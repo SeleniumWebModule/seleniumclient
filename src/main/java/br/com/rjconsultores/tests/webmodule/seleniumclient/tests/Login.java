@@ -3,6 +3,7 @@ package br.com.rjconsultores.tests.webmodule.seleniumclient.tests;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.AttributeKey;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.IdentifyBy;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.WaitForTarget;
+import br.com.rjconsultores.tests.webmodule.seleniumcore.events.FindBy;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.events.WaitEvent;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.events.implem.component.keyboard.KeyPressEvent;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.events.implem.component.mouse.MouseClickEvent;
@@ -18,7 +19,7 @@ public class Login {
 		processLogin(system.getLoginView());
 		system.getViews().add(getUserView());
 		
-		system.getViews().add(getUserAdd());
+		//system.getViews().add(getUserAdd());
 		
 		/*system.getViews().add(validateTabsUserAdd());*/
 		
@@ -59,24 +60,21 @@ public class Login {
 	private static View getUserView() {
 		View view = new View();
 		WaitEvent waitView = new WaitEvent(10);
-		waitView.getAttributes().add(new Attribute("z-menubar-hor", null, IdentifyBy.CLASS_NAME)); 
+		waitView.getAttributes().add(new Attribute(new FindBy(IdentifyBy.CLASS_NAME, "z-menubar-hor"))); 
 		view.doWait(waitView);
 		
 		Component menuSeguranca = new Component();
-		menuSeguranca.getAttributes().put(AttributeKey.WAIT_FOR, WaitForTarget.COMPONENT.name());
-		menuSeguranca.getAttributes().put(AttributeKey.VALUE_WAIT_FOR, "z-menubar-hor");
 		menuSeguranca.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
 		menuSeguranca.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-menu-btn");
-		//menuSeguranca.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "innerHTML");
-		menuSeguranca.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "innerHTML");
-		menuSeguranca.getAttributes().put(AttributeKey.ATTRIBUTE_VALUE, "Segurança");
+		menuSeguranca.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "text");
+		menuSeguranca.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "Segurança");
 		menuSeguranca.getEvents().add(new MouseClickEvent());
 		view.getComponents().add(menuSeguranca);
 		
 		Component menuUsuario = new Component();
 		menuUsuario.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
 		menuUsuario.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-menu-item");
-		menuUsuario.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "innerHTML");
+		menuUsuario.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "text");
 		menuUsuario.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "Usuário");
 		menuUsuario.getEvents().add(new MouseClickEvent());
 		view.getComponents().add(menuUsuario);	
