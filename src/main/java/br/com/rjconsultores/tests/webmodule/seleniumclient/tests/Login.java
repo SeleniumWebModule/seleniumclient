@@ -19,7 +19,7 @@ public class Login {
 		processLogin(system.getLoginView());
 		system.getViews().add(getUserView());
 		
-		//system.getViews().add(getUserAdd());
+		system.getViews().add(getUserAdd());
 		
 		/*system.getViews().add(validateTabsUserAdd());*/
 		
@@ -59,9 +59,6 @@ public class Login {
 
 	private static View getUserView() {
 		View view = new View();
-		WaitEvent waitView = new WaitEvent(10);
-		waitView.getAttributes().add(new Attribute(new FindBy(IdentifyBy.CLASS_NAME, "z-menubar-hor"))); 
-		view.doWait(waitView);
 		
 		Component menuSeguranca = new Component();
 		menuSeguranca.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
@@ -84,12 +81,14 @@ public class Login {
 	
 	private static View getUserAdd() {
 		View view = new View();
-		view.getAttributes().put(AttributeKey.WAIT_FOR, WaitForTarget.VIEW.name());
-		view.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY,IdentifyBy.CLASS_NAME.getDescription());
-		view.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-window-overlapped-header");
 		
+		
+		WaitEvent waitView = new WaitEvent(10);
+		waitView.getAttributes().add(new Attribute("text","Usuário", new FindBy(IdentifyBy.CLASS_NAME, "z-window-overlapped-header"))); 
+		view.doWait(waitView);
 		
 		Component btnIncluirUsuario = new Component();
+		btnIncluirUsuario.registerWaitEvent(waitView);
 		btnIncluirUsuario.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
 		btnIncluirUsuario.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-button-os");
 		btnIncluirUsuario.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "title");
