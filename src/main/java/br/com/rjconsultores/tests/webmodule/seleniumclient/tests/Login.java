@@ -2,7 +2,6 @@ package br.com.rjconsultores.tests.webmodule.seleniumclient.tests;
 
 import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.AttributeKey;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.IdentifyBy;
-import br.com.rjconsultores.tests.webmodule.seleniumcore.enums.WaitForTarget;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.events.FindBy;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.events.WaitEvent;
 import br.com.rjconsultores.tests.webmodule.seleniumcore.events.implem.component.keyboard.KeyPressEvent;
@@ -18,10 +17,9 @@ public class Login {
 		System system = new System();
 		processLogin(system.getLoginView());
 		system.getViews().add(getUserView());
-		
 		system.getViews().add(getUserAdd());
 		
-		/*system.getViews().add(validateTabsUserAdd());*/
+		system.getViews().add(validateTabsUserAdd());
 		
 		system.validate();
 	}
@@ -82,7 +80,6 @@ public class Login {
 	private static View getUserAdd() {
 		View view = new View();
 		
-		
 		WaitEvent waitView = new WaitEvent(10);
 		waitView.getAttributes().add(new Attribute("text","Usuário", new FindBy(IdentifyBy.CLASS_NAME, "z-window-overlapped-header"))); 
 		view.doWait(waitView);
@@ -101,17 +98,19 @@ public class Login {
 
 	private static View validateTabsUserAdd() {
 		View view = new View();
-		view.getAttributes().put(AttributeKey.WAIT_FOR, WaitForTarget.VIEW.name());
-		//view.getAttributes().put(AttributeKey.COMPONENT_NAME, "Usuário");
-		view.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.name());
-		//view.getAttributes().put(AttributeKey.COMPONENT_NAME, "z-tab-text");
+		WaitEvent waitView = new WaitEvent(10);
+		waitView.getAttributes().add(new Attribute("text","Usuário", new FindBy(IdentifyBy.CLASS_NAME, "z-tab-text"))); 
+		view.doWait(waitView);
 		
 		Component inputBoxLogin = new Component();
-		inputBoxLogin.getAttributes().put(AttributeKey.FIND_PARENT_BY, IdentifyBy.TAG_NAME.name());
-		inputBoxLogin.getAttributes().put(AttributeKey.PARENT_ELEMENT,"td");
-		inputBoxLogin.getAttributes().put(AttributeKey.FIND_CHILD_BY, IdentifyBy.CLASS_NAME.name());
-		inputBoxLogin.getAttributes().put(AttributeKey.CHILD_VALUE, "Login");
-		inputBoxLogin.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "z-textbox");
+		inputBoxLogin.getAttributes().put(AttributeKey.FIND_PARENT_BY, IdentifyBy.TAG_NAME.getDescription());
+		inputBoxLogin.getAttributes().put(AttributeKey.PARENT_ELEMENT,"tr");
+		inputBoxLogin.getAttributes().put(AttributeKey.FIND_SIBLING_BY, IdentifyBy.CLASS_NAME.getDescription());
+		inputBoxLogin.getAttributes().put(AttributeKey.VALUE_FIND_SIBLING, "z-label");
+		inputBoxLogin.getAttributes().put(AttributeKey.SIBLING_ID, "text");
+		inputBoxLogin.getAttributes().put(AttributeKey.SIBLING_VALUE, "Login");
+		inputBoxLogin.getAttributes().put(AttributeKey.FIND_CHILD_BY, "class");
+		inputBoxLogin.getAttributes().put(AttributeKey.VALUE_FIND_CHILD_BY, "z-textbox");
 		inputBoxLogin.getAttributes().put(AttributeKey.ATTRIBUTE_VALUE, "seleniumuser");
 		inputBoxLogin.getEvents().add(new KeyPressEvent());
 		view.getComponents().add(inputBoxLogin);
