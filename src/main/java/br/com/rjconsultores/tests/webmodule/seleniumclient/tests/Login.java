@@ -18,7 +18,6 @@ public class Login {
 		processLogin(system.getLoginView());
 		system.getViews().add(getUserView());
 		system.getViews().add(getUserAdd());
-		
 		system.getViews().add(validateTabsUserAdd());
 		
 		system.validate();
@@ -27,6 +26,10 @@ public class Login {
 	private static void processLogin(View viewLogin) {
 
 		View view = viewLogin;
+		view.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
+		view.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-window-highlighted-header");
+		view.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "text");
+		view.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "Conectar");
 		
 		Component user = new Component();
 		user.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.TAG_NAME.getDescription());
@@ -57,6 +60,10 @@ public class Login {
 
 	private static View getUserView() {
 		View view = new View();
+		view.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
+		view.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-caption-l");
+		view.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "text");
+		view.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "Administração da Venta - AMBIENTE DE TESTE LOCAL");
 		
 		Component menuSeguranca = new Component();
 		menuSeguranca.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
@@ -84,38 +91,43 @@ public class Login {
 		waitView.getAttributes().add(new Attribute("text","Usuário", new FindBy(IdentifyBy.CLASS_NAME, "z-window-overlapped-header"))); 
 		view.doWait(waitView);
 		
-		Component btnIncluirUsuario = new Component();
+		view.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
+		view.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-window-overlapped-header");
+		view.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "text");
+		view.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "Usuário");
+		
+		/*Component btnIncluirUsuario = new Component();
 		btnIncluirUsuario.registerWaitEvent(waitView);
 		btnIncluirUsuario.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.getDescription());
 		btnIncluirUsuario.getAttributes().put(AttributeKey.VALUE_FIND_VIEW_COMPONENT_BY, "z-button-os");
 		btnIncluirUsuario.getAttributes().put(AttributeKey.FIND_ATTRIBUTE_BY, "title");
 		btnIncluirUsuario.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "Incluir");
 		btnIncluirUsuario.getEvents().add(new MouseClickEvent());
-		view.getComponents().add(btnIncluirUsuario);
+		view.getComponents().add(btnIncluirUsuario);*/
 		
 		return view;
 	}
 
 	private static View validateTabsUserAdd() {
 		View view = new View();
-		WaitEvent waitView = new WaitEvent(10);
-		waitView.getAttributes().add(new Attribute("text","Usuário", new FindBy(IdentifyBy.CLASS_NAME, "z-tab-text"))); 
-		view.doWait(waitView);
+		WaitEvent waitEvent = new WaitEvent(10);
+		waitEvent.getAttributes().add(new Attribute("text","Usuário", new FindBy(IdentifyBy.CLASS_NAME, "z-window-highlighted-header"))); 
 		
 		Component inputBoxLogin = new Component();
-		inputBoxLogin.getAttributes().put(AttributeKey.FIND_PARENT_BY, IdentifyBy.TAG_NAME.getDescription());
-		inputBoxLogin.getAttributes().put(AttributeKey.PARENT_ELEMENT,"tr");
+		inputBoxLogin.getAttributes().put(AttributeKey.FIND_PARENT_BY, IdentifyBy.CLASS_NAME.getDescription());
+		inputBoxLogin.getAttributes().put(AttributeKey.PARENT_ELEMENT,"z-tab-text");
 		inputBoxLogin.getAttributes().put(AttributeKey.FIND_SIBLING_BY, IdentifyBy.CLASS_NAME.getDescription());
 		inputBoxLogin.getAttributes().put(AttributeKey.VALUE_FIND_SIBLING, "z-label");
 		inputBoxLogin.getAttributes().put(AttributeKey.SIBLING_ID, "text");
 		inputBoxLogin.getAttributes().put(AttributeKey.SIBLING_VALUE, "Login");
-		inputBoxLogin.getAttributes().put(AttributeKey.FIND_CHILD_BY, "class");
-		inputBoxLogin.getAttributes().put(AttributeKey.VALUE_FIND_CHILD_BY, "z-textbox");
+		inputBoxLogin.getAttributes().put(AttributeKey.FIND_CHILD_BY, "tag");
+		inputBoxLogin.getAttributes().put(AttributeKey.VALUE_FIND_CHILD_BY, "input");
 		inputBoxLogin.getAttributes().put(AttributeKey.ATTRIBUTE_VALUE, "seleniumuser");
 		inputBoxLogin.getEvents().add(new KeyPressEvent());
+		inputBoxLogin.registerWaitEvent(waitEvent);
 		view.getComponents().add(inputBoxLogin);
 		
-		Component inputBoxUserName = new Component();
+	/*	Component inputBoxUserName = new Component();
 		inputBoxUserName.getAttributes().put(AttributeKey.FIND_PARENT_BY, IdentifyBy.TAG_NAME.name());
 		inputBoxUserName.getAttributes().put(AttributeKey.PARENT_ELEMENT,"td");
 		inputBoxUserName.getAttributes().put(AttributeKey.FIND_CHILD_BY, IdentifyBy.CLASS_NAME.name());
@@ -158,13 +170,13 @@ public class Login {
 		//selectPerfilAdministrador.getEvents().add(new ListBoxEvent());
 		view.getComponents().add(selectPerfilAdministrador);
 		
-		/*Component btnSalvar = new Component();
+		Component btnSalvar = new Component();
 		btnSalvar.getAttributes().put(AttributeKey.FIND_BY, IdentifyBy.TAG_NAME.name());
 		btnSalvar.getAttributes().put(AttributeKey.COMPONENT_NAME, Tag.BUTTON.name());
 		btnSalvar.getAttributes().put(AttributeKey.ATTRIBUTE_ID, AttributeID.TITLE.name());
 		btnSalvar.getAttributes().put(AttributeKey.ATTRIBUTE_VALUE, "Salvar");
 		btnSalvar.getEvents().add(new MouseClickEvent());
-		view.getComponents().add(btnSalvar);*/
+		view.getComponents().add(btnSalvar);
 		
 		Component tabLocalizacao = new Component();
 		tabLocalizacao.getAttributes().put(AttributeKey.FIND_VIEW_COMPONENT_BY, IdentifyBy.CLASS_NAME.name());
@@ -172,7 +184,7 @@ public class Login {
 		tabLocalizacao.getAttributes().put(AttributeKey.ATTRIBUTE_ID, "text");
 		tabLocalizacao.getAttributes().put(AttributeKey.ATTRIBUTE_VALUE, "Localização");
 		tabLocalizacao.getEvents().add(new MouseClickEvent());
-		view.getComponents().add(tabLocalizacao);
+		view.getComponents().add(tabLocalizacao);*/
 				
 		return view;
 	}
