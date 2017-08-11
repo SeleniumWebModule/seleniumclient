@@ -16,9 +16,9 @@ public class Login {
 	public static void main(String[] args) throws InterruptedException {
 		System system = new System();
 		processLogin(system.getLoginView());
-		system.getViews().add(getUserView());
+		/*system.getViews().add(getUserView());
 		system.getViews().add(getUserAdd());
-		system.getViews().add(validateTabsUserAdd());
+		system.getViews().add(validateTabsUserAdd());*/
 		
 		system.validate();
 	}
@@ -87,7 +87,7 @@ public class Login {
 	private static View getUserAdd() {
 		View view = new View();
 		
-		WaitEvent waitView = new WaitEvent(10);
+		WaitEvent waitView = new WaitEvent(10000);
 		waitView.getAttributes().add(new Attribute("text","Usuário", new FindBy(IdentifyBy.CLASS_NAME, "z-window-overlapped-header"))); 
 		view.doWait(waitView);
 		
@@ -110,7 +110,7 @@ public class Login {
 
 	private static View validateTabsUserAdd() {
 		View view = new View();
-		WaitEvent waitEvent = new WaitEvent(10);
+		WaitEvent waitEvent = new WaitEvent(10000);
 		waitEvent.getAttributes().add(new Attribute("text","Usuário", new FindBy(IdentifyBy.CLASS_NAME, "z-window-highlighted-header"))); 
 		
 		Component inputBoxLogin = new Component();
